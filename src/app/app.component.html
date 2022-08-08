@@ -1,0 +1,53 @@
+
+<img src="/assets/images/logo.PNG">
+<nav class="gridders">
+    <h3>Click on one of these buttons</h3>
+
+    <ng-container class="gridders">
+        <a class="mat-card-buttons" (click)="createEmployee()">
+            <mat-card class="is-alt">
+                <h3>Create a new Employee</h3>
+            </mat-card>
+        </a>
+        <a class="mat-card-buttons" (click)="displayRoaster()">
+            <mat-card class="is-alt">
+                <h3>Display the roaster</h3>
+            </mat-card>
+        </a>
+    </ng-container>
+</nav>
+
+<div *ngIf="displayCreateEmployee">
+    <app-new-employee></app-new-employee>
+</div>
+<div class="calendar-container" *ngIf="events && displayRoasterSection">
+  <div [ngSwitch]="view">
+        <calendar-scheduler-view *ngSwitchCase="CalendarView.Week"
+                                [viewDays]="viewDays"
+                                [viewDate]="viewDate"
+                                [events]="events"
+                                [locale]="locale"                               
+                                [responsive]="false"
+                                [weekStartsOn]="weekStartsOn"
+                                [excludeDays]="excludeDays"
+                                [startsWithToday]="startsWithToday"
+                                [hourSegments]="hourSegments"
+                                [dayStartHour]="dayStartHour"
+                                [dayEndHour]="dayEndHour"
+                                [dayModifier]="dayModifier"
+                                [hourModifier]="hourModifier"
+                                [segmentModifier]="segmentModifier"
+                                [eventModifier]="eventModifier"
+                                [showEventActions]="true"
+                                [showSegmentHour]="true"
+                                [zoomEventOnHover]="true"
+                                (viewDaysChanged)="viewDaysChanged($event)"
+                                (dayHeaderClicked)="dayHeaderClicked($event.day)"
+                                (hourClicked)="hourClicked($event.hour)"
+                                (segmentClicked)="segmentClicked('Clicked', $event.segment)"
+                                (eventClicked)="eventClicked('Clicked', $event.event)"
+                                (eventTimesChanged)="eventTimesChanged($event)"
+                                [refresh]="refresh">
+        </calendar-scheduler-view>
+    </div>
+</div>

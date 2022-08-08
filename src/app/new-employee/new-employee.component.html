@@ -1,0 +1,34 @@
+<mat-card class="shiftMatch-card">
+    <mat-card-title class="label">Create a new employee</mat-card-title>
+    <mat-card-content>
+        <form class="form-filters" [formGroup]="form" autocomplete="off">
+            <div class="filters">
+                <mat-form-field appearance="fill" class="margin-top">
+                    <mat-label>Name</mat-label>
+                    <input matInput formControlName="name" type="text" required autocomplete="off"/>
+                    <mat-error>Required</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Enter your position</mat-label>
+                    <input matInput formControlName="position" type="text" placeholder="Enter your position" required>
+                    <mat-error>Required</mat-error>
+                </mat-form-field>
+                <div>
+                    <a mat-raised-button class="cancel-button" routerLink="../">Cancel</a>
+                    <button
+                    mat-raised-button
+                    color="primary"
+                    class="buttonCreate"
+                    (click)="addEmployee()"
+                    >Create</button
+                    >
+                </div>
+            </div>
+        </form>
+        <br>
+    </mat-card-content>
+</mat-card>
+
+
+
+

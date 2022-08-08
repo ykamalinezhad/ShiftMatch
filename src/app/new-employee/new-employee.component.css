@@ -1,0 +1,36 @@
+.shiftMatch-card{
+    height: 600px;
+}
+
+.filters {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.filter-fields {
+    width: 250px;
+    max-width: 250px;
+}
+
+.cancel-button {
+    padding-right: 25px;;
+}
+
+.buttonCreate {
+    color: white;
+    background-color: cornflowerblue;
+    height: 30px;
+    width: 100px;
+}
+
+
+.form-filters {
+    width: 50%;
+    margin: auto;
+}
+
+.label {
+    text-align: center;
+}

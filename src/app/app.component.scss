@@ -1,0 +1,21 @@
+.calendar-container {
+    border: 1px solid transparent;
+    border-color: #fff #ddd;
+    margin: 0 2em 2em
+}
+
+.gridders {
+    display: grid;
+    gap: 2rem 2rem;
+    width: 40%;
+    margin: 30px auto;
+}
+
+.mat-card-buttons {
+    text-align: center;
+}
+
+.is-alt {
+    background-color: aqua;
+}
+
