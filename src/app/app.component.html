@@ -4,6 +4,11 @@
     <h3>Click on one of these buttons</h3>
 
     <ng-container class="gridders">
+        <a class="mat-card-buttons" (click)="getListOfEmployees()">
+            <mat-card class="is-alt">
+                <h3>List of employees</h3>
+            </mat-card>
+        </a>
         <a class="mat-card-buttons" (click)="createEmployee()">
             <mat-card class="is-alt">
                 <h3>Create a new Employee</h3>

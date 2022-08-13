@@ -6,18 +6,9 @@ import {
     addMonths
 } from 'date-fns';
 import {
-    DAYS_IN_WEEK,
-    SchedulerViewDay,
-    SchedulerViewHour,
-    SchedulerViewHourSegment,
     CalendarSchedulerEvent,
     CalendarSchedulerEventAction,
-    startOfPeriod,
-    endOfPeriod,
-    addPeriod,
-    subPeriod,
     SchedulerDateFormatter,
-    SchedulerEventTimesChangedEvent,
     CalendarSchedulerViewComponent
 } from 'angular-calendar-scheduler';
 import {
@@ -26,7 +17,6 @@ import {
     DateAdapter
 } from 'angular-calendar';
 
-import { AppService } from './services/app.service';
 import { StaffService } from './services/staff.service';
 
 @Component({
@@ -89,102 +79,31 @@ export class AppComponent implements OnInit {
     @ViewChild(CalendarSchedulerViewComponent) calendarScheduler: CalendarSchedulerViewComponent;
     displayRoasterSection: boolean = false;
     displayCreateEmployee: boolean = false;
+    displayListOfEmployee: boolean = false;
 
-    constructor(@Inject(LOCALE_ID) locale: string, private appService: AppService, private dateAdapter: DateAdapter , private staffService: StaffService) {
+    constructor(@Inject(LOCALE_ID) locale: string, private dateAdapter: DateAdapter , private staffService: StaffService) {
         this.locale = locale;
-
-        this.segmentModifier = ((segment: SchedulerViewHourSegment): void => {
-            segment.isDisabled = !this.isDateValid(segment.date);
-        }).bind(this);
-
-        this.eventModifier = ((event: CalendarSchedulerEvent): void => {
-            event.isDisabled = !this.isDateValid(event.start);
-        }).bind(this);
-
-        this.dateOrViewChanged();
     }
 
     ngOnInit(): void {
         this.events = this.staffService.getStaffDetails()
     }
 
-    viewDaysOptionChanged(viewDays: number): void {
-        console.log('viewDaysOptionChanged', viewDays);
-        this.calendarScheduler.setViewDays(viewDays);
-    }
-
-    changeDate(date: Date): void {
-        console.log('changeDate', date);
-        this.viewDate = date;
-        this.dateOrViewChanged();
-    }
-
-    changeView(view: CalendarView): void {
-        console.log('changeView', view);
-        this.view = view;
-        this.dateOrViewChanged();
-    }
-
-    dateOrViewChanged(): void {
-        if (this.startsWithToday) {
-            this.prevBtnDisabled = !this.isDateValid(subPeriod(this.dateAdapter, CalendarView.Day/*this.view*/, this.viewDate, 1));
-            this.nextBtnDisabled = !this.isDateValid(addPeriod(this.dateAdapter, CalendarView.Day/*this.view*/, this.viewDate, 1));
-        } else {
-            this.prevBtnDisabled = !this.isDateValid(endOfPeriod(this.dateAdapter, CalendarView.Day/*this.view*/, subPeriod(this.dateAdapter, CalendarView.Day/*this.view*/, this.viewDate, 1)));
-            this.nextBtnDisabled = !this.isDateValid(startOfPeriod(this.dateAdapter, CalendarView.Day/*this.view*/, addPeriod(this.dateAdapter, CalendarView.Day/*this.view*/, this.viewDate, 1)));
-        }
-
-        if (this.viewDate < this.minDate) {
-            this.changeDate(this.minDate);
-        } else if (this.viewDate > this.maxDate) {
-            this.changeDate(this.maxDate);
-        }
-    }
-
-    private isDateValid(date: Date): boolean {
-        return /*isToday(date) ||*/ date >= this.minDate && date <= this.maxDate;
-    }
-
-    viewDaysChanged(viewDays: number): void {
-        console.log('viewDaysChanged', viewDays);
-        this.viewDays = viewDays;
-    }
-
-    dayHeaderClicked(day: SchedulerViewDay): void {
-        console.log('dayHeaderClicked Day', day);
-    }
-
-    hourClicked(hour: SchedulerViewHour): void {
-        console.log('hourClicked Hour', hour);
-    }
-
-    segmentClicked(action: string, segment: SchedulerViewHourSegment): void {
-        console.log('segmentClicked Action', action);
-        console.log('segmentClicked Segment', segment);
-    }
-
-    eventClicked(action: string, event: CalendarSchedulerEvent): void {
-        console.log('eventClicked Action', action);
-        console.log('eventClicked Event', event);
-    }
-
-    eventTimesChanged({ event, newStart, newEnd, type }: SchedulerEventTimesChangedEvent): void {
-        console.log('eventTimesChanged Type', type);
-        console.log('eventTimesChanged Event', event);
-        console.log('eventTimesChanged New Times', newStart, newEnd);
-        const ev: CalendarSchedulerEvent = this.events.find(e => e.id === event.id);
-        ev.start = newStart;
-        ev.end = newEnd;
-        this.refresh.next();
-    }
-
     displayRoaster() {
         this.displayRoasterSection = true;
         this.displayCreateEmployee = false;
+        this.displayListOfEmployee = false;
     }
 
     createEmployee() {
         this.displayRoasterSection = false;
         this.displayCreateEmployee = true;
+        this.displayListOfEmployee = false;
+    }
+
+    getListOfEmployees() {
+        this.displayListOfEmployee = true;
+        this.displayRoasterSection = false;
+        this.displayCreateEmployee = false;
     }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { StaffService } from '../services/staff.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-new-employee',
@@ -12,13 +13,12 @@ export class NewEmployeeComponent implements OnInit {
   public form: FormGroup;
   constructor(
     private fb: FormBuilder, 
-    private staffService: StaffService
+    private staffService: StaffService,
+    private snacks: MatSnackBar
   ) { 
   }
 
-  ngOnInit(): void {
-    console.log(this.staffService.getStaffDetails())
-    
+  ngOnInit(): void {    
     this.form = this.fb.group({
       name: [null],
       position: [null]
@@ -26,8 +26,18 @@ export class NewEmployeeComponent implements OnInit {
   }
 
   addEmployee() {
-    console.log(this.form.value)
     const formValue = this.form.value;
-    this.staffService.addEmployee(formValue.name, formValue.position)
+    try {
+      // this.staffService.addEmployee(formValue.name, formValue.position)
+      this.snacks.open('The new employee is added successfully',"", {
+        duration: 2000,
+        horizontalPosition: "center",
+        verticalPosition: "top",
+      });
+      
+    }
+    catch(e) {
+      this.snacks.open('error!!!!')
+    }
   }
 }

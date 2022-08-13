@@ -13,14 +13,15 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 import { SchedulerModule } from 'angular-calendar-scheduler';
 
-import { AppService } from './services/app.service';
-
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { NewEmployeeComponent } from './new-employee/new-employee.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { NewEmployeeComponent } from './new-employee/new-employee.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     CalendarModule.forRoot({
@@ -40,10 +42,10 @@ import { NewEmployeeComponent } from './new-employee/new-employee.component';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatCardModule
+    MatCardModule,
+    MatSnackBarModule 
   ],
   providers: [
-    AppService,
     { provide: LOCALE_ID, useValue: 'en-US' }
   ],
   bootstrap: [AppComponent]
